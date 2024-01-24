@@ -1,5 +1,0 @@
-C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Microservcie-two\bin\Release\net6.0\publish\DotNet.Docker.exe
-C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Microservcie-two\bin\Release\net6.0\publish\DotNet.Docker.dll
-C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Microservcie-two\bin\Release\net6.0\publish\DotNet.Docker.deps.json
-C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Microservcie-two\bin\Release\net6.0\publish\DotNet.Docker.runtimeconfig.json
-C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Microservcie-two\bin\Release\net6.0\publish\DotNet.Docker.pdb
