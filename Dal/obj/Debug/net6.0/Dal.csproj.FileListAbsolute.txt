@@ -1,0 +1,14 @@
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\bin\Debug\net6.0\Dal.deps.json
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\bin\Debug\net6.0\Dal.dll
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\bin\Debug\net6.0\Dal.pdb
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\Dal.csproj.AssemblyReference.cache
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\Dal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\Dal.AssemblyInfoInputs.cache
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\Dal.AssemblyInfo.cs
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\Dal.csproj.CoreCompileInputs.cache
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\Dal.dll
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\refint\Dal.dll
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\Dal.pdb
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\ref\Dal.dll
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\bin\Debug\net6.0\Dal.runtimeconfig.json
+C:\Users\eliyahupo\RiderProjects\Build In Dotnet\Dal\obj\Debug\net6.0\Dal.genruntimeconfig.cache
