@@ -66,4 +66,11 @@ public class AuthorsService : IAuthorsService
         }
 
     }
+
+    public async Task UpdateAuthor(int id, AuthorDto author)
+    {
+        var authorToUpdate = _db.Authors.FindAsync(id);
+        _db.Entry(authorToUpdate).CurrentValues.SetValues(authorToUpdate);
+        await _db.SaveChangesAsync();
+    }
 }

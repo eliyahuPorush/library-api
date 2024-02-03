@@ -8,4 +8,6 @@ public interface IBooksService
     List<BookDto> GetAllBooks();
     Task<bool> AddBook(BookDto book);
     List<BookDto> GetAuthorBooks(int authorId);
+    Task DeleteBook(string id);
+    Task UpdateBook(int id, BookDto book);
 }

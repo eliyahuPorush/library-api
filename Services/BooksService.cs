@@ -12,7 +12,7 @@ public class BooksService : IBooksService
     private readonly BookStoreDbContext _db;
     private readonly IMapper _mapper;
     private readonly ILogger<BooksService> _logger;
-    
+
     public BooksService(BookStoreDbContext db, IMapper mapper, ILogger<BooksService> logger)
     {
         _db = db;
@@ -25,6 +25,7 @@ public class BooksService : IBooksService
         _logger.LogInformation("About to fetch all books from db");
         return _mapper.Map<List<BookDto>>(_db.Books.ToList());
     }
+
     public async Task<BookDto> GetBook(int id)
     {
         return _mapper.Map<BookDto>(await _db.Books.FindAsync(id));
@@ -37,14 +38,38 @@ public class BooksService : IBooksService
         {
             await _db.Books.AddAsync(mappedBook);
             await _db.SaveChangesAsync();
-            
+
             return true;
         }
         catch (Exception ex)
         {
             return false;
         }
-        
+    }
+
+    public async Task DeleteBook(string id)
+    {
+        try
+        {
+            var bookToDelete = await _db.Books.FindAsync(id);
+            if (bookToDelete is not null)
+            {
+                _db.Books.Remove(bookToDelete);
+                await _db.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw new Exception($"couldn't delete book with id: {id}");
+        }
+    }
+
+    public async Task UpdateBook(int id, BookDto book)
+    {
+        var bookToUpdate = _db.Books.FindAsync(id);
+        _db.Entry(bookToUpdate).CurrentValues.SetValues(bookToUpdate);
+        await _db.SaveChangesAsync();
     }
 
     public List<BookDto> GetAuthorBooks(int authorId)
