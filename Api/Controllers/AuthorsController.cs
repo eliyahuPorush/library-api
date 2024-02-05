@@ -34,4 +34,11 @@ public class AuthorsController : ControllerBase
         await _authorsService.DeleteAuthorAsync(authorId);        
         return NoContent();
     }
+    
+    [HttpPatch]
+    public async Task<IActionResult> UpdateAuthor(int id, AuthorDto author)
+    {
+        await _authorsService.UpdateAuthor(id, author);
+        return NoContent();
+    }
 }

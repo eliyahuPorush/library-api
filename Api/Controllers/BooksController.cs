@@ -16,7 +16,7 @@ public class BooksController : ControllerBase
     }
     
     [HttpGet, Route("{id}")]
-    public async Task<IActionResult> GetBook([FromRoute] int id)
+    public async Task<IActionResult> GetBook(int id)
     {
         return Ok(await _booksService.GetBook(id));
     }
@@ -35,6 +35,20 @@ public class BooksController : ControllerBase
     public async Task<IActionResult>  AddBook(BookDto book)
     {
         return Ok(await _booksService.AddBook(book));
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteBook(string id)
+    {
+        await _booksService.DeleteBook(id);
+        return NoContent();
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult> UpdateBook(int id, BookDto book)
+    {
+        await _booksService.UpdateBook(id, book);
+        return NoContent();
     }
     
 }
