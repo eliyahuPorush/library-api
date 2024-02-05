@@ -3,6 +3,7 @@ using Dal;
 using Dal.Models;
 using Domain.Dtos;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Services.Interfaces;
 
 namespace Services;
@@ -11,11 +12,13 @@ public class AuthorsService : IAuthorsService
 {
     private readonly BookStoreDbContext _db;
     private readonly IMapper _mapper;
+    private readonly ILogger<AuthorsService> _logger;
 
-    public AuthorsService(BookStoreDbContext db, IMapper mapper)
+    public AuthorsService(BookStoreDbContext db, IMapper mapper, ILogger<AuthorsService> logger)
     {
         _db = db;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public List<AuthorDto> GetAuthors()
@@ -29,6 +32,7 @@ public class AuthorsService : IAuthorsService
         try
         {
             var addedAuthor = await _db.Authors.AddAsync(mappedAuthor);
+            _logger.LogInformation($"[AuthorsService][AddAuthorAsync] About to add new author to db, added aurhor id: {addedAuthor.Entity.Id}");
             await _db.SaveChangesAsync();
             return addedAuthor.Entity.Id;
         }
@@ -57,6 +61,7 @@ public class AuthorsService : IAuthorsService
 
             _db.Authors.Remove(author);
             await _db.SaveChangesAsync();
+            _logger.LogInformation($"[AuthorsService][DeleteAuthorAsync] Author with id {author.Id} has been deleted");
             return authorId;
         }
         catch (Exception e)
