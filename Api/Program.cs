@@ -17,12 +17,19 @@ var config = new ConfigurationBuilder()
 // declare services
 builder.Services.AddScoped<IBooksService, BooksService>();
 builder.Services.AddScoped<IAuthorsService, AuthorsService>();
+builder.Services.AddScoped<ISearchService, SearchService>();
 builder.Services.AddDbContext<BookStoreDbContext>(options =>
 {
     options.UseSqlServer(config.GetConnectionString("DB"));
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+    );
+builder.Services.AddSwaggerGen();
+
 var mapperConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new MappingProfile());
@@ -33,7 +40,12 @@ builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 
-
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.MapControllers();
 app.UsePathBase(new PathString("/api"));

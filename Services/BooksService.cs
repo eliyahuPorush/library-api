@@ -2,6 +2,7 @@
 using Dal;
 using Dal.Models;
 using Domain.Dtos;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Services.Interfaces;
 
@@ -28,22 +29,25 @@ public class BooksService : IBooksService
 
     public async Task<BookDto> GetBook(int id)
     {
-        return _mapper.Map<BookDto>(await _db.Books.FindAsync(id));
+        var book = await _db.Books.Include(b => b.Author)
+            .Where(b => b.Id == id)
+            .FirstOrDefaultAsync();
+        return _mapper.Map<BookDto>(book);
     }
 
-    public async Task<bool> AddBook(BookDto book)
+    public async Task<int> AddBook(BookDto book)
     {
         var mappedBook = _mapper.Map<Book>(book);
         try
         {
-            await _db.Books.AddAsync(mappedBook);
+            var newBook = await _db.Books.AddAsync(mappedBook);
             await _db.SaveChangesAsync();
 
-            return true;
+            return newBook.Entity.Id;
         }
         catch (Exception ex)
         {
-            return false;
+            throw new Exception(ex.Message);
         }
     }
 

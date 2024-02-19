@@ -34,7 +34,8 @@ public class BooksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult>  AddBook(BookDto book)
     {
-        return Ok(await _booksService.AddBook(book));
+        var newBookId = await _booksService.AddBook(book);
+        return Created(string.Empty, new {Id = newBookId});
     }
 
     [HttpDelete]

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore.Design;
-
+﻿
 namespace Dal.Models;
 
 public class Address
