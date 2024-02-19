@@ -29,6 +29,7 @@ public class BooksService : IBooksService
 
     public async Task<BookDto> GetBook(int id)
     {
+        _logger.LogInformation($"[BooksService][GetBook] About to fetch book with book id {id} from db");
         var book = await _db.Books.Include(b => b.Author)
             .Where(b => b.Id == id)
             .FirstOrDefaultAsync();
@@ -40,9 +41,11 @@ public class BooksService : IBooksService
         var mappedBook = _mapper.Map<Book>(book);
         try
         {
+            _logger.LogInformation($"[BooksService][AddBokk] About to add book with book id {mappedBook.Id} to db");
+            await _db.Books.AddAsync(mappedBook);
             var newBook = await _db.Books.AddAsync(mappedBook);
             await _db.SaveChangesAsync();
-
+            _logger.LogInformation($"[BooksService][AddBook] book with id: {newBook.Entity.Id} added sucessfully");
             return newBook.Entity.Id;
         }
         catch (Exception ex)
@@ -78,7 +81,10 @@ public class BooksService : IBooksService
 
     public List<BookDto> GetAuthorBooks(int authorId)
     {
-        var authorsBooks = _db.Books.Where(book => book.Author.Id == authorId);
+            
+        _logger.LogInformation($"[BooksService][GetAuthorBooks] About to fetch books for author id {authorId} from db");
+        var authorsBooks = _db.Books.Where(book => book.Author.Id == authorId);         
+        _logger.LogInformation($"[BooksService][GetAuthorBooks] books fetched sucessfully for author id {authorId}");
         return _mapper.Map<List<BookDto>>(authorsBooks);
     }
 }

@@ -13,8 +13,8 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 var config = new ConfigurationBuilder()
     .AddJsonFile($"appsettings.{environment}.json")
     .Build();
-
 // declare services
+builder.Services.AddLogging(builder => builder.AddConsole());
 builder.Services.AddScoped<IBooksService, BooksService>();
 builder.Services.AddScoped<IAuthorsService, AuthorsService>();
 builder.Services.AddScoped<ISearchService, SearchService>();
