@@ -24,7 +24,7 @@ public class BooksService : IBooksService
     public List<BookDto> GetAllBooks()
     {
         _logger.LogInformation("About to fetch all books from db");
-        return _mapper.Map<List<BookDto>>(_db.Books.ToList());
+        return _mapper.Map<List<BookDto>>(_db.Books.Include(book => book.Author).AsNoTracking().ToList());
     }
 
     public async Task<BookDto> GetBook(int id)
@@ -54,28 +54,27 @@ public class BooksService : IBooksService
         }
     }
 
-    public async Task DeleteBook(string id)
+    public async Task DeleteBook(int id)
     {
         try
         {
-            var bookToDelete = await _db.Books.FindAsync(id);
-            if (bookToDelete is not null)
-            {
-                _db.Books.Remove(bookToDelete);
-                await _db.SaveChangesAsync();
-            }
+            _logger.LogInformation($"[BooksService] [DeleteBook] about to delete book with id: {id}");
+            _db.Books.Remove(new Book{Id = id});
+            await _db.SaveChangesAsync();
         }
-        catch (Exception ex)
+        catch (DbUpdateConcurrencyException ex)
         {
-            Console.WriteLine(ex);
-            throw new Exception($"couldn't delete book with id: {id}");
+                _logger.LogError($"[BooksService] [DeleteBook] book id: {id} is not exist on db and cannot be delete");
+                throw new Exception($"book id: {id} is not exist on db and cannot be delete, exception message: {ex.Message}");
         }
     }
 
-    public async Task UpdateBook(int id, BookDto book)
+    public async Task UpdateBook(BookDto book)
     {
-        var bookToUpdate = _db.Books.FindAsync(id);
-        _db.Entry(bookToUpdate).CurrentValues.SetValues(bookToUpdate);
+        var mappedBook = _mapper.Map<Book>(book);
+        var bookToUpdate = await _db.Books.FindAsync(book.Id);
+        if (bookToUpdate is null) throw new Exception($"can't find book with id: {book.Id} to update");
+        _db.Entry(bookToUpdate).CurrentValues.SetValues(mappedBook);
         await _db.SaveChangesAsync();
     }
 

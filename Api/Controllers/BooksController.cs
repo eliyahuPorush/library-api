@@ -38,17 +38,17 @@ public class BooksController : ControllerBase
         return Created(string.Empty, new {Id = newBookId});
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> DeleteBook(string id)
+    [HttpDelete, Route("{id}")]
+    public async Task<IActionResult> DeleteBook([FromRoute] int id)
     {
         await _booksService.DeleteBook(id);
         return NoContent();
     }
 
     [HttpPatch]
-    public async Task<IActionResult> UpdateBook(int id, BookDto book)
+    public async Task<IActionResult> UpdateBook([FromBody] BookDto book)
     {
-        await _booksService.UpdateBook(id, book);
+        await _booksService.UpdateBook(book);
         return NoContent();
     }
     

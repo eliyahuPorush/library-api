@@ -7,5 +7,5 @@ public interface IAuthorsService
     List<AuthorDto> GetAuthors();
     Task<int> AddAuthorAsync(AuthorDto author);
     Task<int> DeleteAuthorAsync(int authorId);
-    Task UpdateAuthor(int id, AuthorDto author);
+    Task UpdateAuthor(AuthorDto author);
 }

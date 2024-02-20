@@ -38,6 +38,11 @@ var mapperConfig = new MapperConfiguration(mc =>
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+    );
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

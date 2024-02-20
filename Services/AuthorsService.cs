@@ -72,10 +72,12 @@ public class AuthorsService : IAuthorsService
 
     }
 
-    public async Task UpdateAuthor(int id, AuthorDto author)
+    public async Task UpdateAuthor(AuthorDto author)
     {
-        var authorToUpdate = _db.Authors.FindAsync(id);
-        _db.Entry(authorToUpdate).CurrentValues.SetValues(authorToUpdate);
+        var mappedAuthor = _mapper.Map<Author>(author);
+        var authorToUpdate = await _db.Authors.FindAsync(author.Id);
+        if (authorToUpdate is null) throw new Exception($"Can't find author with id: {author.Id} to update");
+        _db.Entry(authorToUpdate).CurrentValues.SetValues(mappedAuthor);
         await _db.SaveChangesAsync();
     }
 }

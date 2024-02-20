@@ -36,9 +36,9 @@ public class AuthorsController : ControllerBase
     }
     
     [HttpPatch]
-    public async Task<IActionResult> UpdateAuthor(int id, AuthorDto author)
+    public async Task<IActionResult> UpdateAuthor(AuthorDto author)
     {
-        await _authorsService.UpdateAuthor(id, author);
+        await _authorsService.UpdateAuthor(author);
         return NoContent();
     }
 }
