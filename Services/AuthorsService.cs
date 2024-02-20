@@ -23,7 +23,7 @@ public class AuthorsService : IAuthorsService
 
     public List<AuthorDto> GetAuthors()
     {
-        return _mapper.Map<List<AuthorDto>>(_db.Authors);
+        return _mapper.Map<List<AuthorDto>>(_db.Authors.Include(a => a.Address));
     }
 
     public async Task<int> AddAuthorAsync(AuthorDto author)
